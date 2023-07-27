@@ -3,9 +3,29 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
+      interval: monthly
+    labels:
+      - dependabot
+      - dependencies
+    commit-message:
+      prefix: "chore(ci)"
+      include: scope
+    assignees:
+      - "thedaviddias"
+    reviewers:
+      - "thedaviddias"
 
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: daily
+      interval: monthly
+    labels:
+      - dependabot
+      - dependencies
+    commit-message:
+      prefix: "chore(ci)"
+      include: scope
+    assignees:
+      - "thedaviddias"
+    reviewers:
+      - "thedaviddias"

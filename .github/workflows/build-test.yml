@@ -4,6 +4,7 @@ on:
   pull_request:
     paths-ignore:
       - "**.md"
+      - "**.yml"
   push:
     branches:
       - main
@@ -81,9 +82,6 @@ jobs:
         id: release-notification
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Print the output
-        run: echo "${{ steps.release-notification.outputs.releaseInfo }}" | jq '.' > output.json
 
   slack:
     runs-on: ubuntu-latest
