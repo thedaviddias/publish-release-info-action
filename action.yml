@@ -1,0 +1,45 @@
+name: Publish Release Info
+description: Publish a release notification to Slack with a changelog and list to related tools
+
+author: David Dias <thedaviddias@gmail.com>
+
+branding:
+  icon: 'message-circle'
+  color: 'gray-dark'
+
+inputs:
+  github_token:
+    description: Your GitHub token for authentication. It is used to get the repository information and generate the changelog.
+    required: true
+
+  repo:
+    description: The repository for which the action should generate the changelog and post a release notification. If not provided, it defaults to the repository where the action is running.
+    required: false
+
+  jira_ticket_prefix:
+    description: The specific letter or pattern to target in the commit title.
+    required: false
+
+  jira_instance_url:
+    description: The custom URL of the JIRA instance.
+    required: false
+
+  slack_webhook_url:
+    description: The URL of the Slack Webhook to which the action will send a message with the changelog and release details.
+    required: false
+
+  sentry_project_name:
+    description: The name of the Sentry project related to the repository. This will be included in the Slack notification for quick access to the project error tracking.
+    required: false
+
+  sentry_project_id:
+    description: The id of the Sentry project. This is used to fetch the related issues and include them in the Slack notification.
+    required: false
+
+  grafana_dashboard_link:
+    description: The URL link to the Grafana dashboard related to the repository. This link will be included in the Slack notification for easy access to relevant analytics.
+    required: false
+
+runs:
+  using: node16
+  main: dist/index.js
