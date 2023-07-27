@@ -4,7 +4,10 @@ A GitHub Action that sends release notifications to Slack, integrating with JIRA
 
 ## Usage
 
-## Create Workflow
+### Screenshot of the Slack notification
+
+![Screenshot of the Slack notification](./screenshots/demo-1.jpg)
+### Create Workflow
 
 To use this GitHub Action, you need to create a workflow file (e.g., ``.github/workflows/deploy.yml``) in your repository. Here's an example workflow that runs when a tag matching the pattern `v[0-9]+.[0-9]+.[0-9]+` is pushed:
 
@@ -13,8 +16,14 @@ name: Deploy to production
 
 on:
   push:
+    # Push/tags only work if you manually created the tag/release using Github GUI
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
+  # Prefer the workflows/completed, specially if using tools like semantic-release
+  workflow_run:
+    workflows: ['Production workflow']
+    types:
+      - completed
 
 jobs:
   release:
