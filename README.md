@@ -1,5 +1,8 @@
 # Release notification (Action)
 
+[![Check dist/](https://github.com/thedaviddias/publish-release-info-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/thedaviddias/publish-release-info-action/actions/workflows/check-dist.yml)
+[![Build tests](https://github.com/thedaviddias/publish-release-info-action/actions/workflows/build-test.yml/badge.svg)](https://github.com/thedaviddias/publish-release-info-action/actions/workflows/build-test.yml)
+
 A GitHub Action that sends release notifications to Slack, integrating with JIRA, Sentry, and Grafana.
 
 ## Usage
