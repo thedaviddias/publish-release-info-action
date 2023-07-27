@@ -19,11 +19,6 @@ on:
     # Push/tags only work if you manually created the tag/release using Github GUI
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
-  # Prefer the workflows/completed, specially if using tools like semantic-release
-  workflow_run:
-    workflows: ['Production workflow']
-    types:
-      - completed
 
 jobs:
   release:
@@ -45,8 +40,8 @@ jobs:
           sentry_project_name: MyProject
           sentry_project_id: 1234
           grafana_dashboard_link: https://grafana.com/dashboards/XXXX
-          contributor_replace_regex: "--"
-          contributor_replace_char: "-"
+          contributor_replace_regex: "-"
+          contributor_replace_char: "."
 ```
 
 #### Inputs
@@ -55,8 +50,8 @@ jobs:
 | --------------------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------- |
 | `github_token`              | yes      |         | Token to use to authorize label changes. Typically the GITHUB_TOKEN secret                                |
 | `repo`                      | no       |         | Name of the repo (e.g. owner/repo) if not the current one                                                 |
-| `contributor_replace_regex` | no       | "-"     | Regular expression (regex) pattern to identify characters in the `contributor` name that will be replaced |
-| `contributor_replace_char`  | no       | "."     | The character that will replace specific characters in the `contributor` name                             |
+| `contributor_replace_regex` | no       |         | Regular expression (regex) pattern to identify characters in the `contributor` name that will be replaced |
+| `contributor_replace_char`  | no       |         | The character that will replace specific characters in the `contributor` name                             |
 | `slack_webhook_url`         | no       |         | Slack webhook URL to receive release notifications                                                        |
 | `jira_ticket_prefix`        | no       |         | Prefix for JIRA ticket references in PR titles (e.g. ABC)                                                 |
 | `jira_instance_url`         | no       |         | URL for your JIRA instance to generate JIRA ticket links (e.g. https://your-jira-instance.com/browse)     |

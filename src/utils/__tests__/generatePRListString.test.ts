@@ -108,13 +108,13 @@ describe('generatePRListString', () => {
   it('should handle PR list with JIRA ticket references and without prefix and jiraInstanceUrl', () => {
     const contributorsCommits = [
       {
-        contributor: 'contributor1',
+        contributor: 'contributor-1',
         prTitle: 'PR title (ABC-123)',
         prUrl: 'https://github.com/owner/repo/pull/5',
         prNumber: 5,
       },
       {
-        contributor: 'contributor2',
+        contributor: 'contributor.2',
         prTitle: 'Another PR (ABC-789)',
         prUrl: 'https://github.com/owner/repo/pull/6',
         prNumber: 6,
@@ -123,18 +123,20 @@ describe('generatePRListString', () => {
 
     const jiraTicketPrefix = ''
     const jiraInstanceUrl = '' // Empty string for jiraInstanceUrl
+    const contributorReplaceChar = ''
+    const contributorReplaceRegex = ''
 
     const prListString = generatePRListString(
       contributorsCommits,
       jiraTicketPrefix,
       jiraInstanceUrl,
-      '-',
-      undefined
+      contributorReplaceChar,
+      contributorReplaceRegex
     )
 
     const expectedPrListString =
-      '- PR title (ABC-123) by @contributor1 in <https://github.com/owner/repo/pull/5|#5>  \n' +
-      '- Another PR (ABC-789) by @contributor2 in <https://github.com/owner/repo/pull/6|#6>  \n'
+      '- PR title (ABC-123) by @contributor-1 in <https://github.com/owner/repo/pull/5|#5>  \n' +
+      '- Another PR (ABC-789) by @contributor.2 in <https://github.com/owner/repo/pull/6|#6>  \n'
 
     expect(prListString).toEqual(expectedPrListString)
   })
