@@ -27,7 +27,7 @@ jobs:
     steps:
 
       - name: Release Notification
-        uses: thedaviddias/publish-release-info-action@v1
+        uses: thedaviddias/publish-release-info-action@v1.1.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           slack_webhook_url: https://hooks.slack.com/services/XXXXXX/XXXXX/XXXXXXX
@@ -106,7 +106,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Release Notification
-        uses: thedaviddias/publish-release-info-action@v1
+        uses: thedaviddias/publish-release-info-action@v1.1.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
