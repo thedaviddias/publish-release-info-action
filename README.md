@@ -36,20 +36,24 @@ jobs:
           sentry_project_name: MyProject
           sentry_project_id: 1234
           grafana_dashboard_link: https://grafana.com/dashboards/XXXX
+          contributor_replace_regex: "--"
+          contributor_replace_char: "-"
 ```
 
 #### Inputs
 
-| Name                     | Required | Default | Description                                                                                           |
-| ------------------------ | -------- | ------- | ----------------------------------------------------------------------------------------------------- |
-| `github_token`           | yes      |         | Token to use to authorize label changes. Typically the GITHUB_TOKEN secret                            |
-| `repo`                   | no       |         | Repo name                                                                                             |
-| `slack_webhook_url`      | no       |         | Slack webhook URL to receive release notifications                                                    |
-| `jira_ticket_prefix`     | no       |         | Prefix for JIRA ticket references in PR titles (e.g. ABC)                                             |
-| `jira_instance_url`      | no       |         | URL for your JIRA instance to generate JIRA ticket links (e.g. https://your-jira-instance.com/browse) |
-| `sentry_project_name`    | no       |         | ID of the Sentry project for error tracking                                                           |
-| `sentry_project_name`    | no       |         | Name of the Sentry project for error tracking                                                         |
-| `grafana_dashboard_link` | no       |         | Link to the Grafana dashboard for monitoring                                                          |
+| Name                        | Required | Default | Description                                                                                               |
+| --------------------------- | -------- | ------- | --------------------------------------------------------------------------------------------------------- |
+| `github_token`              | yes      |         | Token to use to authorize label changes. Typically the GITHUB_TOKEN secret                                |
+| `repo`                      | no       |         | Name of the repo (e.g. owner/repo) if not the current one                                                 |
+| `contributor_replace_regex` | no       | "-"     | Regular expression (regex) pattern to identify characters in the `contributor` name that will be replaced |
+| `contributor_replace_char`  | no       | "."     | The character that will replace specific characters in the `contributor` name                             |
+| `slack_webhook_url`         | no       |         | Slack webhook URL to receive release notifications                                                        |
+| `jira_ticket_prefix`        | no       |         | Prefix for JIRA ticket references in PR titles (e.g. ABC)                                                 |
+| `jira_instance_url`         | no       |         | URL for your JIRA instance to generate JIRA ticket links (e.g. https://your-jira-instance.com/browse)     |
+| `sentry_project_name`       | no       |         | ID of the Sentry project for error tracking                                                               |
+| `sentry_project_name`       | no       |         | Name of the Sentry project for error tracking                                                             |
+| `grafana_dashboard_link`    | no       |         | Link to the Grafana dashboard for monitoring                                                              |
 
 
 ### Outputs

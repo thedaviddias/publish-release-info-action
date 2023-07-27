@@ -117,7 +117,9 @@ export async function run(): Promise<void> {
     const prListString = generatePRListString(
       contributorsCommitsWithTicketLinks,
       options.jiraTicketPrefix,
-      options.jiraInstanceUrl
+      options.jiraInstanceUrl,
+      options.contributorReplaceChar,
+      options.contributorReplaceRegex
     )
 
     const currentDate = new Date().toLocaleString('en-US', {
