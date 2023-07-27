@@ -20,6 +20,10 @@ describe('getInputs', () => {
           return 'invalid-jira-ticket-link' // Note: this is not a valid URL
         case 'jira_ticket_prefix':
           return 'ABC' // Note: this is a valid prefix
+        case 'contributor_replace_char':
+          return '.'
+        case 'contributor_replace_regex':
+          return '-'
         default:
           return ''
       }
@@ -36,6 +40,8 @@ describe('getInputs', () => {
       slackWebhookUrl: 'invalid-webhook-url',
       jiraInstanceUrl: 'invalid-jira-ticket-link',
       jiraTicketPrefix: 'ABC',
+      contributorReplaceChar: '.',
+      contributorReplaceRegex: '-',
     }
 
     expect(getInputs()).toEqual(expectedInputs)
@@ -81,6 +87,10 @@ describe('getInputs', () => {
           return 'https://example.atlassian.net/browse' // Note: this is a valid URL
         case 'jira_ticket_prefix':
           return 'ABC' // Note: this is a valid prefix
+        case 'contributor_replace_char':
+          return '.'
+        case 'contributor_replace_regex':
+          return '-'
         default:
           return ''
       }
@@ -97,6 +107,8 @@ describe('getInputs', () => {
       slackWebhookUrl: 'https://hooks.slack.com/services/XXXX/XXXX/XXXX',
       jiraInstanceUrl: 'https://example.atlassian.net/browse',
       jiraTicketPrefix: 'ABC',
+      contributorReplaceChar: '.',
+      contributorReplaceRegex: '-',
     }
 
     expect(getInputs()).toEqual(expectedInputs)
@@ -107,6 +119,8 @@ describe('getInputs', () => {
     expect(core.getInput).toHaveBeenCalledWith('slack_webhook_url')
     expect(core.getInput).toHaveBeenCalledWith('jira_instance_url')
     expect(core.getInput).toHaveBeenCalledWith('jira_ticket_prefix')
+    expect(core.getInput).toHaveBeenCalledWith('contributor_replace_char')
+    expect(core.getInput).toHaveBeenCalledWith('contributor_replace_regex')
     expect(mockWarning).not.toHaveBeenCalled() // no warnings should be logged
 
     mockGetInput.mockRestore()

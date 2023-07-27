@@ -1,9 +1,14 @@
+import { replaceContributorName } from './replaceContributorName'
+import { replaceJiraTicketLinks } from './replaceJiraTicketLinks'
+
 /**
  * Generate a pull request list string.
  *
  * @param {Array<{contributor: string, prTitle: string, prUrl: string, prNumber: number}>} contributorsCommits - List of contributors and their commits.
  * @param {string} jiraTicketPrefix - Prefix for JIRA ticket, e.g., 'ABC'.
  * @param {string} jiraInstanceUrl - URL for the JIRA instance, e.g., 'https://your-jira-instance.com/browse'.
+ * @param {string} [contributorReplaceChar='-'] - Optional character to replace in the contributor name.
+ * @param {string} [contributorReplaceRegex='.'] - Optional regex pattern to identify characters to be replaced in the contributor name.
  * @returns {string} The pull request list string.
  */
 export function generatePRListString(
@@ -14,35 +19,27 @@ export function generatePRListString(
     prNumber: number
   }>,
   jiraTicketPrefix: string,
-  jiraInstanceUrl: string
+  jiraInstanceUrl: string,
+  contributorReplaceChar = '.',
+  contributorReplaceRegex = '-'
 ): string {
-  let prListString = ''
+  const prListStringParts: string[] = []
 
   contributorsCommits.forEach((item) => {
-    const jiraTicketPattern = new RegExp(
-      `${jiraTicketPrefix}-\\d+|${jiraTicketPrefix}\\d+`,
-      'g'
+    const contributorName = replaceContributorName(
+      item.contributor,
+      contributorReplaceChar,
+      contributorReplaceRegex
     )
-    const ticketNumbers = item.prTitle.match(jiraTicketPattern) || []
-    let prTitleWithTicketLink = item.prTitle
+    const prTitleWithTicketLink = replaceJiraTicketLinks(
+      item.prTitle,
+      jiraTicketPrefix,
+      jiraInstanceUrl
+    )
 
-    // Replace each JIRA ticket number with a link to the JIRA ticket
-    if (jiraInstanceUrl) {
-      ticketNumbers.forEach((ticketNumber) => {
-        // Normalize the ticket number to have the format 'ABC-123'
-        const normalizedTicketNumber = ticketNumber.includes('-')
-          ? ticketNumber
-          : `${jiraTicketPrefix}-${ticketNumber}`
-        const jiraTicketLink = `${jiraInstanceUrl}${normalizedTicketNumber}`
-        prTitleWithTicketLink = prTitleWithTicketLink.replace(
-          ticketNumber,
-          `<${jiraTicketLink}|${normalizedTicketNumber}>`
-        )
-      })
-    }
-
-    prListString += `- ${prTitleWithTicketLink} by @${item.contributor} in <${item.prUrl}|#${item.prNumber}>  \n`
+    const prListEntry = `- ${prTitleWithTicketLink} by @${contributorName} in <${item.prUrl}|#${item.prNumber}>  \n`
+    prListStringParts.push(prListEntry)
   })
 
-  return prListString
+  return prListStringParts.join('')
 }

@@ -61,4 +61,6 @@ export const MOCK_GET_INPUTS = {
   slackWebhookUrl: 'https://hooks.slack.com/services/123/456/789',
   jiraTicketPrefix: 'ABC',
   jiraInstanceUrl: 'https://jira.myProject.com',
+  contributorReplaceChar: '.',
+  contributorReplaceRegex: '-',
 }

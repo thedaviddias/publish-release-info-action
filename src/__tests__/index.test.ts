@@ -39,6 +39,8 @@ describe('run function', () => {
       slackWebhookUrl: 'http://mock-webhook-url',
       jiraInstanceUrl: 'http://mock-jira-instance-url',
       jiraTicketPrefix: 'ABC',
+      contributorReplaceChar: '.',
+      contributorReplaceRegex: '-',
     })
 
     const getOwnerAndRepoMock = jest.spyOn(getOwnerAndRepoModule, 'getOwnerAndRepo')

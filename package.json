@@ -1,6 +1,6 @@
 {
   "name": "publish-release-info-action",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": true,
   "description": "Sends release information to Slack and other communication platforms, keeping your team up-to-date with the latest releases",
   "main": "dist/index.js",
