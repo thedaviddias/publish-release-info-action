@@ -1,0 +1,39 @@
+{
+  "search.exclude": {
+    ".git": true,
+    "**/node_modules": false,
+    "CHANGELOG": true,
+    "CODE_OF_CONDUCT": true,
+    "CONTRIBUTING": true,
+    "coverage": true,
+    "LICENCE": true,
+    "node_modules": true,
+    "package.lock": true,
+    "dist": true
+  },
+  "editor.formatOnSave": true,
+  "javascript.format.enable": true,
+  "javascript.validate.enable": false,
+  "typescript.validate.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.format": true,
+  },
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
+  "eslint.format.enable": true,
+  "eslint.run": "onSave",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": true,
+      "strings": true
+    },
+  }
+}
