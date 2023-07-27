@@ -15,12 +15,10 @@ inputs:
   contributor_replace_regex:
     description: An optional regular expression (regex) pattern to identify characters in the `contributor` name that will be replaced.
     required: false
-    default: '-'
 
   contributor_replace_char:
     description: The character that will replace specific characters in the `contributor` name.
     required: false
-    default: '.'
 
   repo:
     description: The repository for which the action should generate the changelog and post a release notification. If not provided, it defaults to the repository where the action is running.

@@ -46,8 +46,8 @@ export function getInputs(): GetInputsType {
   const sentryProjectName = core.getInput('sentry_project_name') || ''
   const sentryProjectId = core.getInput('sentry_project_id') || ''
   const slackWebhookUrl = core.getInput('slack_webhook_url') || ''
-  const contributorReplaceChar = core.getInput('contributor_replace_char') || '.'
-  const contributorReplaceRegex = core.getInput('contributor_replace_regex') || '-'
+  const contributorReplaceChar = core.getInput('contributor_replace_char') || ''
+  const contributorReplaceRegex = core.getInput('contributor_replace_regex') || ''
 
   // Input value checking example for URLs
   if (grafanaDashboardLink && !isValidUrl(grafanaDashboardLink)) {
