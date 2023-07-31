@@ -34,7 +34,7 @@ jobs:
     steps:
 
       - name: Release Notification
-        uses: thedaviddias/publish-release-info-action@v1.1.1
+        uses: thedaviddias/publish-release-info-action@vX.X.X
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           slack_webhook_url: https://hooks.slack.com/services/XXXXXX/XXXXX/XXXXXXX
@@ -113,9 +113,62 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Release Notification
-        uses: thedaviddias/publish-release-info-action@v1.1.1
+        uses: thedaviddias/publish-release-info-action@vX.X.X
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
+```
+
+### Example Workflow with Custom Slack template
+
+We can use the output from `publish-relase-info-action` and use in combinaison with other actions like [slack-send](https://github.com/marketplace/actions/slack-send) in case you want to use a custom notification template.
+
+```yaml
+name: Deploy to production
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  release:
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release Notification
+        uses: thedaviddias/publish-release-info-action@vX.X.X
+        id: release
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Post to a Slack channel
+        uses: slackapi/slack-github-action@v1.24.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+          channel-id: 'CHANNEL_ID'
+          payload: |
+            {
+              "text": "New release!",
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Project:*\n<${{ steps.release.outputs.repoLink }}|${{ steps.release.outputs.repo}}>",
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Version:*\n<${{ steps.release.outputs.releaseLink }}|${{ steps.release.outputs.releaseVersion }}>",
+                    }
+                  ]
+                }
+              ]
+            }
 
 ```
 
