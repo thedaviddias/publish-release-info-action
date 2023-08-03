@@ -39,7 +39,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           slack_webhook_url: https://hooks.slack.com/services/XXXXXX/XXXXX/XXXXXXX
           jira_ticket_prefix: ABC
-          jira_instance_url: https://your-jira-instance.com/browse
+          jira_instance_url: https://your-jira-instance.com
           sentry_project_name: MyProject
           sentry_project_id: 1234
           grafana_dashboard_link: https://grafana.com/dashboards/XXXX
@@ -57,7 +57,7 @@ jobs:
 | `contributor_replace_char`  | no       |         | The character that will replace specific characters in the `contributor` name                             |
 | `slack_webhook_url`         | no       |         | Slack webhook URL to receive release notifications                                                        |
 | `jira_ticket_prefix`        | no       |         | Prefix for JIRA ticket references in PR titles (e.g. ABC)                                                 |
-| `jira_instance_url`         | no       |         | URL for your JIRA instance to generate JIRA ticket links (e.g. https://your-jira-instance.com/browse)     |
+| `jira_instance_url`         | no       |         | URL for your JIRA instance to generate JIRA ticket links (e.g. https://your-jira-instance.com)            |
 | `sentry_project_name`       | no       |         | ID of the Sentry project for error tracking                                                               |
 | `sentry_project_name`       | no       |         | Name of the Sentry project for error tracking                                                             |
 | `grafana_dashboard_link`    | no       |         | Link to the Grafana dashboard for monitoring                                                              |
