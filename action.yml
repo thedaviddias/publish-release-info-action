@@ -12,6 +12,11 @@ inputs:
     description: Your GitHub token for authentication. It is used to get the repository information and generate the changelog.
     required: true
 
+  tag_regex:
+    description: 'A regular expression to match against git tags. The first capture group should be the version number.'
+    required: false
+    default: '^v[0-9]+\\.[0-9]+\\.[0-9]+$'  # Matches the "v" prefix by default
+
   contributor_replace_regex:
     description: An optional regular expression (regex) pattern to identify characters in the `contributor` name that will be replaced.
     required: false

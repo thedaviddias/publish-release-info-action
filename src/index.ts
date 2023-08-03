@@ -37,13 +37,21 @@ export async function run(): Promise<void> {
       return
     }
 
-    // remove the "v" from the start of the tag, if it's there
-    const currentVersion = currentTag.name.startsWith('v')
-      ? currentTag.name.slice(1)
-      : currentTag.name
-    const previousVersion = previousTag.name.startsWith('v')
-      ? previousTag.name.slice(1)
-      : previousTag.name
+    // Extract the version number from the tag using the provided regex
+    const tagRegex = new RegExp(options.tagRegex)
+    const currentVersionMatch = currentTag.name.match(tagRegex)
+    const previousVersionMatch = previousTag.name.match(tagRegex)
+
+    if (!currentVersionMatch || !previousVersionMatch) {
+      core.warning(
+        'Current or previous tag does not match the provided regular expression. Exiting.'
+      )
+      return
+    }
+
+     // Use the first capture group as the version number
+     const currentVersion = currentVersionMatch[1];
+     const previousVersion = previousVersionMatch[1];
 
     const comparisonResult = compareSemVer(currentVersion, previousVersion)
 
