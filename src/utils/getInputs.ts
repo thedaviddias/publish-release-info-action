@@ -26,7 +26,7 @@ export interface GetInputsType {
   sentryProjectName: string
   sentryProjectId: string
   grafanaDashboardLink: string
-  slackWebhookUrl: string
+  slackWebhookUrls: string
   jiraTicketPrefix: string
   jiraInstanceUrl: string
   contributorReplaceChar: string
@@ -48,7 +48,7 @@ export function getInputs(): GetInputsType {
   const grafanaDashboardLink = core.getInput('grafana_dashboard_link') || ''
   const sentryProjectName = core.getInput('sentry_project_name') || ''
   const sentryProjectId = core.getInput('sentry_project_id') || ''
-  const slackWebhookUrl = core.getInput('slack_webhook_url') || ''
+  const slackWebhookUrls = core.getInput('slack_webhook_urls') || ''
   const contributorReplaceChar = core.getInput('contributor_replace_char') || ''
   const contributorReplaceRegex = core.getInput('contributor_replace_regex') || ''
 
@@ -57,12 +57,17 @@ export function getInputs(): GetInputsType {
     core.warning(`Invalid Grafana dashboard link: ${grafanaDashboardLink}`)
   }
 
-  if (
-    slackWebhookUrl &&
-    (!isValidUrl(slackWebhookUrl) ||
-      !slackWebhookUrl.startsWith('https://hooks.slack.com'))
-  ) {
-    core.warning(`Invalid Slack webhook URL: ${slackWebhookUrl}`)
+  // Now split the slackWebhookUrls and validate each one
+  const slackWebhookUrlArray = slackWebhookUrls.split(',')
+
+  for (const url of slackWebhookUrlArray) {
+    const trimmedUrl = url.trim()
+    if (
+      !isValidUrl(trimmedUrl) ||
+      !trimmedUrl.startsWith('https://hooks.slack.com')
+    ) {
+      core.warning(`Invalid Slack webhook URL: ${trimmedUrl}`)
+    }
   }
 
   // Input value checking for repo format
@@ -100,7 +105,7 @@ export function getInputs(): GetInputsType {
     grafanaDashboardLink,
     sentryProjectName,
     sentryProjectId,
-    slackWebhookUrl,
+    slackWebhookUrls,
     jiraTicketPrefix,
     jiraInstanceUrl: jiraInstanceUrlProcessed,
     contributorReplaceChar,

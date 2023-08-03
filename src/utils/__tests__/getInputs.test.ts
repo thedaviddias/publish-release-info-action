@@ -14,7 +14,7 @@ describe('getInputs', () => {
           return 'my-project-name'
         case 'sentry_project_id':
           return 'invalid-project-id' // Note: this is not a valid numeric ID
-        case 'slack_webhook_url':
+        case 'slack_webhook_urls':
           return 'invalid-webhook-url' // Note: this is not a valid URL that starts with 'https://hooks.slack.com'
         case 'jira_instance_url':
           return 'invalid-jira-ticket-link' // Note: this is not a valid URL
@@ -39,12 +39,12 @@ describe('getInputs', () => {
       grafanaDashboardLink: 'my-dashboard-link',
       sentryProjectName: 'my-project-name',
       sentryProjectId: 'invalid-project-id',
-      slackWebhookUrl: 'invalid-webhook-url',
+      slackWebhookUrls: 'invalid-webhook-url',
       jiraInstanceUrl: 'invalid-jira-ticket-link/browse/',
       jiraTicketPrefix: 'ABC',
       contributorReplaceChar: '.',
       contributorReplaceRegex: '-',
-      tagRegex: 'my-tag-regex'
+      tagRegex: 'my-tag-regex',
     }
 
     expect(getInputs()).toEqual(expectedInputs)
@@ -52,7 +52,7 @@ describe('getInputs', () => {
     expect(core.getInput).toHaveBeenCalledWith('grafana_dashboard_link')
     expect(core.getInput).toHaveBeenCalledWith('sentry_project_name')
     expect(core.getInput).toHaveBeenCalledWith('sentry_project_id')
-    expect(core.getInput).toHaveBeenCalledWith('slack_webhook_url')
+    expect(core.getInput).toHaveBeenCalledWith('slack_webhook_urls')
     expect(core.getInput).toHaveBeenCalledWith('jira_instance_url')
     expect(core.getInput).toHaveBeenCalledWith('jira_ticket_prefix')
     expect(core.getInput).toHaveBeenCalledWith('tag_regex')
@@ -85,8 +85,8 @@ describe('getInputs', () => {
           return 'my-project-name'
         case 'sentry_project_id':
           return '1234'
-        case 'slack_webhook_url':
-          return 'https://hooks.slack.com/services/XXXX/XXXX/XXXX'
+        case 'slack_webhook_urls':
+          return 'https://hooks.slack.com/services/XXXX/XXXX/XXXX,https://hooks.slack.com/services/XXXX/XXXX/XXXX'
         case 'jira_instance_url':
           return 'https://example.atlassian.net' // Note: this is a valid URL
         case 'jira_ticket_prefix':
@@ -110,7 +110,8 @@ describe('getInputs', () => {
       grafanaDashboardLink: 'https://grafana.com/dashboards/my-dashboard-link',
       sentryProjectName: 'my-project-name',
       sentryProjectId: '1234',
-      slackWebhookUrl: 'https://hooks.slack.com/services/XXXX/XXXX/XXXX',
+      slackWebhookUrls:
+        'https://hooks.slack.com/services/XXXX/XXXX/XXXX,https://hooks.slack.com/services/XXXX/XXXX/XXXX',
       jiraInstanceUrl: 'https://example.atlassian.net/browse/',
       jiraTicketPrefix: 'ABC',
       contributorReplaceChar: '.',
@@ -124,7 +125,7 @@ describe('getInputs', () => {
     expect(core.getInput).toHaveBeenCalledWith('grafana_dashboard_link')
     expect(core.getInput).toHaveBeenCalledWith('sentry_project_name')
     expect(core.getInput).toHaveBeenCalledWith('sentry_project_id')
-    expect(core.getInput).toHaveBeenCalledWith('slack_webhook_url')
+    expect(core.getInput).toHaveBeenCalledWith('slack_webhook_urls')
     expect(core.getInput).toHaveBeenCalledWith('jira_instance_url')
     expect(core.getInput).toHaveBeenCalledWith('jira_ticket_prefix')
     expect(core.getInput).toHaveBeenCalledWith('contributor_replace_char')

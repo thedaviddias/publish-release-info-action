@@ -49,9 +49,9 @@ export async function run(): Promise<void> {
       return
     }
 
-     // Use the first capture group as the version number
-     const currentVersion = currentVersionMatch[1];
-     const previousVersion = previousVersionMatch[1];
+    // Use the first capture group as the version number
+    const currentVersion = currentVersionMatch[1]
+    const previousVersion = previousVersionMatch[1]
 
     const comparisonResult = compareSemVer(currentVersion, previousVersion)
 
@@ -97,14 +97,14 @@ export async function run(): Promise<void> {
     )
 
     // Get the Slack webhook URL from the GitHub Action input
-    const slackWebhookUrl = core.getInput('slack_webhook_url')
+    const slackWebhookUrls = core.getInput('slack_webhook_urls').split(',')
 
-    if (!slackWebhookUrl) {
+    if (!slackWebhookUrls.length) {
       // If the Slack webhook URL is not provided, skip sending the notification to Slack
       core.debug(
-        'Missing slack_webhook_url input, no publication to Slack with be done but the release info will be available as output.'
+        'Missing slack_webhook_urls input, no publication to Slack with be done but the release info will be available as output.'
       )
-      // Prepare output data even if slackWebhookUrl is not present
+      // Prepare output data even if slackWebhookUrls is not present
       const outputData = {
         repo,
         repoLink,
@@ -166,8 +166,10 @@ export async function run(): Promise<void> {
       currentDate
     )
 
-    await axios.post(slackWebhookUrl, slackData)
-    core.info('Message sent to Slack.')
+    for (const url of slackWebhookUrls) {
+      await axios.post(url.trim(), slackData)
+      core.info(`Message to Slack`)
+    }
   } catch (error) {
     // If an error occurs during the script execution, fail the GitHub Action and output the error message
     if (error instanceof Error) {

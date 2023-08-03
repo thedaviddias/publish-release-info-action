@@ -37,8 +37,8 @@ inputs:
     description: The custom URL of the JIRA instance.
     required: false
 
-  slack_webhook_url:
-    description: The URL of the Slack Webhook to which the action will send a message with the changelog and release details.
+  slack_webhook_urls:
+    description: Comma-separated list of Slack Webhook URLs to which the action will send a message with the changelog and release details.
     required: false
 
   sentry_project_name:
