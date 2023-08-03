@@ -63,4 +63,5 @@ export const MOCK_GET_INPUTS = {
   jiraInstanceUrl: 'https://jira.myProject.com',
   contributorReplaceChar: '.',
   contributorReplaceRegex: '-',
+  tagRegex: '^v[0-9]+\\.[0-9]+\\.[0-9]+$',
 }
