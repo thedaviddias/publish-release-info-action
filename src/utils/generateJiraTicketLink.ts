@@ -9,7 +9,6 @@ export function generateJiraTicketLink(
   ticketNumber: string,
   instanceUrl: string
 ): string {
-
   // Ensure instanceUrl ends with a slash
   const formattedInstanceUrl = instanceUrl.endsWith('/')
     ? instanceUrl
