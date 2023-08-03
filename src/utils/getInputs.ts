@@ -1,4 +1,5 @@
 import * as core from '@actions/core'
+import { appendBrowseToUrl } from './appendBrowseToUrl'
 
 // Simple URL validation function
 function isValidUrl(string: string): boolean {
@@ -89,6 +90,8 @@ export function getInputs(): GetInputsType {
     )
   }
 
+  const jiraInstanceUrlProcessed = appendBrowseToUrl(jiraInstanceUrl)
+
   return {
     repo,
     grafanaDashboardLink,
@@ -96,7 +99,7 @@ export function getInputs(): GetInputsType {
     sentryProjectId,
     slackWebhookUrl,
     jiraTicketPrefix,
-    jiraInstanceUrl,
+    jiraInstanceUrl: jiraInstanceUrlProcessed,
     contributorReplaceChar,
     contributorReplaceRegex,
   }

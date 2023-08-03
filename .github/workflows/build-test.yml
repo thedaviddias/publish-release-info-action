@@ -102,6 +102,6 @@ jobs:
           sentry_project_id: ${{ secrets.SENTRY_PROJECT_ID }}
           grafana_dashboard_link: https://example.grafana.net/d/xxxx/web-overview?orgId=1
           jira_ticket_prefix: "ABC"
-          jira_instance_url: "https://example.atlassian.net/browse"
+          jira_instance_url: "https://example.atlassian.net"
 
 
