@@ -54,7 +54,7 @@ jobs:
 | --------------------------- | -------- | --------------------------- | --------------------------------------------------------------------------------------------------------- |
 | `github_token`              | yes      |                             | Token to use to authorize label changes. Typically the GITHUB_TOKEN secret                                |
 | `repo`                      | no       |                             | Name of the repo (e.g. owner/repo) if not the current one                                                 |
-| `tag_regex`                 | no       | ^v[0-9]+\\.[0-9]+\\.[0-9]+$ | Regex to accommodate varying tag formatting                                                               |
+| `tag_regex`                 | no       | ^v[0-9]+\\.[0-9]+\\.[0-9]+$ | Regex to accommodate varying tag formatting.                                                              |
 | `time_zone_offset`          | no       | 0                           | Timezone offset in minutes from UTC.                                                                      |
 | `contributor_replace_regex` | no       |                             | Regular expression (regex) pattern to identify characters in the `contributor` name that will be replaced |
 | `contributor_replace_char`  | no       |                             | The character that will replace specific characters in the `contributor` name                             |

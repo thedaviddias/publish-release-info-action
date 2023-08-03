@@ -44,7 +44,7 @@ export async function run(): Promise<void> {
     const previousVersionMatch = previousTag.name.match(tagRegex)
 
     if (!currentVersionMatch || !previousVersionMatch) {
-      core.warning(
+      core.error(
         'Current or previous tag does not match the provided regular expression. Exiting.'
       )
       return
@@ -57,7 +57,7 @@ export async function run(): Promise<void> {
     const comparisonResult = compareSemVer(currentVersion, previousVersion)
 
     if (comparisonResult <= 0) {
-      core.warning('Current tag is not greater than the previous tag. Exiting.')
+      core.error('Current tag is not greater than the previous tag. Exiting.')
       return
     }
 
