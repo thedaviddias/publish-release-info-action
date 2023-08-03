@@ -14,6 +14,7 @@ import { generatePRListString } from './utils/generatePRListString'
 import { generateSlackMessage } from './utils/generateSlackMessage'
 import { parseTicketNumberFromTitle } from './utils/parseTicketNumberFromTitle'
 import { generateJiraTicketLink } from './utils/generateJiraTicketLink'
+import { compareSemVer } from './utils/compareSemVer'
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function run(): Promise<void> {
@@ -33,6 +34,21 @@ export async function run(): Promise<void> {
 
     if (!currentTag || !previousTag) {
       core.warning('No current or previous tag found. Exiting.')
+      return
+    }
+
+    // remove the "v" from the start of the tag, if it's there
+    const currentVersion = currentTag.name.startsWith('v')
+      ? currentTag.name.slice(1)
+      : currentTag.name
+    const previousVersion = previousTag.name.startsWith('v')
+      ? previousTag.name.slice(1)
+      : previousTag.name
+
+    const comparisonResult = compareSemVer(currentVersion, previousVersion)
+
+    if (comparisonResult <= 0) {
+      core.warning('Current tag is not greater than the previous tag. Exiting.')
       return
     }
 
