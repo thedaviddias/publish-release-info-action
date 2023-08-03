@@ -9,6 +9,7 @@ import * as getContributorCommitsModule from '../utils/getContributorCommits'
 import * as getBaseUrlFromContextModule from '../utils/getBaseUrlFromContext'
 import * as generateRepoLinkModule from '../utils/generateRepoLink'
 import * as generateReleaseLinkModule from '../utils/generateReleaseLink'
+import * as compareSemVerModule from '../utils/compareSemVer'
 // import * as getCommitOfTagModule from '../utils/getCommitOfTag'
 // import * as generatePRListStringModule from '../utils/generatePRListString'
 
@@ -24,6 +25,7 @@ jest.mock('../utils/generateRepoLink')
 jest.mock('../utils/generateReleaseLink')
 jest.mock('../utils/getCommitOfTag')
 jest.mock('../utils/generatePRListString')
+jest.mock('../utils/compareSemVer')
 
 const mockedGetInputs =
   getInputsModule.getInputs as jest.Mock<getInputsModule.GetInputsType>
@@ -41,6 +43,7 @@ describe('run function', () => {
       jiraTicketPrefix: 'ABC',
       contributorReplaceChar: '.',
       contributorReplaceRegex: '-',
+      tagRegex: '^v[0-9]+\\.[0-9]+\\.[0-9]+$'
     })
 
     const getOwnerAndRepoMock = jest.spyOn(getOwnerAndRepoModule, 'getOwnerAndRepo')
@@ -103,6 +106,7 @@ describe('run function', () => {
       'generateReleaseLink'
     )
     generateReleaseLinkMock.mockReturnValue('http://mock-release-link')
+
 
     // const getCommitOfTagMock = jest.spyOn(getCommitOfTagModule, 'getCommitOfTag')
     // getCommitOfTagMock.mockResolvedValue({ data: { html_url: 'http://mock-commit-url' } })

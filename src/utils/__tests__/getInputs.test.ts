@@ -24,6 +24,8 @@ describe('getInputs', () => {
           return '.'
         case 'contributor_replace_regex':
           return '-'
+        case 'tag_regex':
+          return 'my-tag-regex'
         default:
           return ''
       }
@@ -42,6 +44,7 @@ describe('getInputs', () => {
       jiraTicketPrefix: 'ABC',
       contributorReplaceChar: '.',
       contributorReplaceRegex: '-',
+      tagRegex: 'my-tag-regex'
     }
 
     expect(getInputs()).toEqual(expectedInputs)
@@ -52,6 +55,7 @@ describe('getInputs', () => {
     expect(core.getInput).toHaveBeenCalledWith('slack_webhook_url')
     expect(core.getInput).toHaveBeenCalledWith('jira_instance_url')
     expect(core.getInput).toHaveBeenCalledWith('jira_ticket_prefix')
+    expect(core.getInput).toHaveBeenCalledWith('tag_regex')
     expect(core.warning).toHaveBeenCalledWith(
       "Invalid repository format: my-repo. It should be in 'owner/repo' format."
     )
@@ -91,6 +95,8 @@ describe('getInputs', () => {
           return '.'
         case 'contributor_replace_regex':
           return '-'
+        case 'tag_regex':
+          return '^v[0-9]+\\.[0-9]+\\.[0-9]+$'
         default:
           return ''
       }
@@ -109,10 +115,12 @@ describe('getInputs', () => {
       jiraTicketPrefix: 'ABC',
       contributorReplaceChar: '.',
       contributorReplaceRegex: '-',
+      tagRegex: '^v[0-9]+\\.[0-9]+\\.[0-9]+$',
     }
 
     expect(getInputs()).toEqual(expectedInputs)
     expect(core.getInput).toHaveBeenCalledWith('repo')
+    expect(core.getInput).toHaveBeenCalledWith('tag_regex')
     expect(core.getInput).toHaveBeenCalledWith('grafana_dashboard_link')
     expect(core.getInput).toHaveBeenCalledWith('sentry_project_name')
     expect(core.getInput).toHaveBeenCalledWith('sentry_project_id')
