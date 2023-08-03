@@ -38,7 +38,7 @@ describe('getInputs', () => {
       sentryProjectName: 'my-project-name',
       sentryProjectId: 'invalid-project-id',
       slackWebhookUrl: 'invalid-webhook-url',
-      jiraInstanceUrl: 'invalid-jira-ticket-link',
+      jiraInstanceUrl: 'invalid-jira-ticket-link/browse/',
       jiraTicketPrefix: 'ABC',
       contributorReplaceChar: '.',
       contributorReplaceRegex: '-',
@@ -84,7 +84,7 @@ describe('getInputs', () => {
         case 'slack_webhook_url':
           return 'https://hooks.slack.com/services/XXXX/XXXX/XXXX'
         case 'jira_instance_url':
-          return 'https://example.atlassian.net/browse' // Note: this is a valid URL
+          return 'https://example.atlassian.net' // Note: this is a valid URL
         case 'jira_ticket_prefix':
           return 'ABC' // Note: this is a valid prefix
         case 'contributor_replace_char':
@@ -105,7 +105,7 @@ describe('getInputs', () => {
       sentryProjectName: 'my-project-name',
       sentryProjectId: '1234',
       slackWebhookUrl: 'https://hooks.slack.com/services/XXXX/XXXX/XXXX',
-      jiraInstanceUrl: 'https://example.atlassian.net/browse',
+      jiraInstanceUrl: 'https://example.atlassian.net/browse/',
       jiraTicketPrefix: 'ABC',
       contributorReplaceChar: '.',
       contributorReplaceRegex: '-',
