@@ -31,6 +31,7 @@ export interface GetInputsType {
   jiraInstanceUrl: string
   contributorReplaceChar: string
   contributorReplaceRegex: string
+  timeZoneOffset: string
 }
 
 /**
@@ -42,7 +43,7 @@ export function getInputs(): GetInputsType {
   core.info('Input options obtained.')
 
   const repo = core.getInput('repo') || ''
-  const tagRegex = core.getInput('tag_regex')
+  const tagRegex = core.getInput('tag_regex') || '^v[0-9]+\\.[0-9]+\\.[0-9]+$'
   const jiraTicketPrefix = core.getInput('jira_ticket_prefix') || ''
   const jiraInstanceUrl = core.getInput('jira_instance_url') || ''
   const grafanaDashboardLink = core.getInput('grafana_dashboard_link') || ''
@@ -51,6 +52,7 @@ export function getInputs(): GetInputsType {
   const slackWebhookUrls = core.getInput('slack_webhook_urls') || ''
   const contributorReplaceChar = core.getInput('contributor_replace_char') || ''
   const contributorReplaceRegex = core.getInput('contributor_replace_regex') || ''
+  let timeZoneOffset = core.getInput('time_zone_offset') || '0'
 
   // Input value checking example for URLs
   if (grafanaDashboardLink && !isValidUrl(grafanaDashboardLink)) {
@@ -99,6 +101,14 @@ export function getInputs(): GetInputsType {
 
   const jiraInstanceUrlProcessed = appendBrowseToUrl(jiraInstanceUrl)
 
+  // Check if timeZoneOffset has the correct format
+  if (isNaN(Number(timeZoneOffset))) {
+    core.warning(
+      `Invalid time zone offset: ${timeZoneOffset}. It should be a numerical value representing minutes from UTC. Positive for timezones ahead of UTC, negative for those behind. Defaulting to '0' (UTC).`
+    )
+    timeZoneOffset = '0'
+  }
+
   return {
     repo,
     tagRegex,
@@ -110,5 +120,6 @@ export function getInputs(): GetInputsType {
     jiraInstanceUrl: jiraInstanceUrlProcessed,
     contributorReplaceChar,
     contributorReplaceRegex,
+    timeZoneOffset,
   }
 }

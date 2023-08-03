@@ -44,6 +44,7 @@ describe('run function', () => {
       contributorReplaceChar: '.',
       contributorReplaceRegex: '-',
       tagRegex: '^v[0-9]+\\.[0-9]+\\.[0-9]+$',
+      timeZoneOffset: '0',
     })
 
     const getOwnerAndRepoMock = jest.spyOn(getOwnerAndRepoModule, 'getOwnerAndRepo')

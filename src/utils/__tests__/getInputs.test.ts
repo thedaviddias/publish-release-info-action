@@ -26,6 +26,8 @@ describe('getInputs', () => {
           return '-'
         case 'tag_regex':
           return 'my-tag-regex'
+        case 'time_zone_offset':
+          return 'GTM-0'
         default:
           return ''
       }
@@ -45,6 +47,7 @@ describe('getInputs', () => {
       contributorReplaceChar: '.',
       contributorReplaceRegex: '-',
       tagRegex: 'my-tag-regex',
+      timeZoneOffset: '0',
     }
 
     expect(getInputs()).toEqual(expectedInputs)
@@ -56,6 +59,10 @@ describe('getInputs', () => {
     expect(core.getInput).toHaveBeenCalledWith('jira_instance_url')
     expect(core.getInput).toHaveBeenCalledWith('jira_ticket_prefix')
     expect(core.getInput).toHaveBeenCalledWith('tag_regex')
+    expect(core.getInput).toHaveBeenCalledWith('time_zone_offset')
+    expect(core.warning).toHaveBeenCalledWith(
+      "Invalid time zone offset: GTM-0. It should be a numerical value representing minutes from UTC. Positive for timezones ahead of UTC, negative for those behind. Defaulting to '0' (UTC)."
+    )
     expect(core.warning).toHaveBeenCalledWith(
       "Invalid repository format: my-repo. It should be in 'owner/repo' format."
     )
@@ -97,6 +104,8 @@ describe('getInputs', () => {
           return '-'
         case 'tag_regex':
           return '^v[0-9]+\\.[0-9]+\\.[0-9]+$'
+        case 'time_zone_offset':
+          return '0'
         default:
           return ''
       }
@@ -117,6 +126,7 @@ describe('getInputs', () => {
       contributorReplaceChar: '.',
       contributorReplaceRegex: '-',
       tagRegex: '^v[0-9]+\\.[0-9]+\\.[0-9]+$',
+      timeZoneOffset: '0',
     }
 
     expect(getInputs()).toEqual(expectedInputs)
@@ -130,6 +140,7 @@ describe('getInputs', () => {
     expect(core.getInput).toHaveBeenCalledWith('jira_ticket_prefix')
     expect(core.getInput).toHaveBeenCalledWith('contributor_replace_char')
     expect(core.getInput).toHaveBeenCalledWith('contributor_replace_regex')
+    expect(core.getInput).toHaveBeenCalledWith('time_zone_offset')
     expect(mockWarning).not.toHaveBeenCalled() // no warnings should be logged
 
     mockGetInput.mockRestore()

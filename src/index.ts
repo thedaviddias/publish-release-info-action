@@ -15,6 +15,7 @@ import { generateSlackMessage } from './utils/generateSlackMessage'
 import { parseTicketNumberFromTitle } from './utils/parseTicketNumberFromTitle'
 import { generateJiraTicketLink } from './utils/generateJiraTicketLink'
 import { compareSemVer } from './utils/compareSemVer'
+import { getCurrentDate } from './utils/getCurrentDate'
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function run(): Promise<void> {
@@ -146,14 +147,7 @@ export async function run(): Promise<void> {
       options.contributorReplaceRegex
     )
 
-    const currentDate = new Date().toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    })
+    const currentDate = getCurrentDate(options.timeZoneOffset)
 
     const slackData = generateSlackMessage(
       repoLink,

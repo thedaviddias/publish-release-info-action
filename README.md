@@ -41,10 +41,11 @@ jobs:
           jira_ticket_prefix: ABC
           jira_instance_url: https://your-jira-instance.com
           sentry_project_name: MyProject
-          sentry_project_id: 1234
+          sentry_project_id: "1234"
           grafana_dashboard_link: https://grafana.com/dashboards/XXXX
           contributor_replace_regex: "-"
           contributor_replace_char: "."
+          time_zone_offset: "-4" # Toronto (Canada - Ontario)
 ```
 
 #### Inputs
@@ -54,6 +55,7 @@ jobs:
 | `github_token`              | yes      |                             | Token to use to authorize label changes. Typically the GITHUB_TOKEN secret                                |
 | `repo`                      | no       |                             | Name of the repo (e.g. owner/repo) if not the current one                                                 |
 | `tag_regex`                 | no       | ^v[0-9]+\\.[0-9]+\\.[0-9]+$ | Regex to accommodate varying tag formatting                                                               |
+| `time_zone_offset`          | no       | 0                           | Timezone offset in minutes from UTC.                                                                      |
 | `contributor_replace_regex` | no       |                             | Regular expression (regex) pattern to identify characters in the `contributor` name that will be replaced |
 | `contributor_replace_char`  | no       |                             | The character that will replace specific characters in the `contributor` name                             |
 | `slack_webhook_urls`        | no       |                             | Slack webhook URL to receive release notifications                                                        |
@@ -144,6 +146,7 @@ jobs:
         id: release
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          time_zone_offset: "+5"
 
       - name: Post to a Slack channel
         uses: slackapi/slack-github-action@v1.24.0
