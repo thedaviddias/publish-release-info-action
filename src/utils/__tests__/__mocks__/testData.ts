@@ -58,7 +58,7 @@ export const MOCK_GET_INPUTS = {
   sentryProjectName: 'myProject',
   sentryProjectId: '123',
   grafanaDashboardLink: 'https://grafana.myProject.com',
-  slackWebhookUrl: 'https://hooks.slack.com/services/123/456/789',
+  slackWebhookUrls: 'https://hooks.slack.com/services/123/456/789',
   jiraTicketPrefix: 'ABC',
   jiraInstanceUrl: 'https://jira.myProject.com',
   contributorReplaceChar: '.',

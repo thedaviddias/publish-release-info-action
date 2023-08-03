@@ -74,7 +74,7 @@ describe('generateSlackMessage', () => {
       sentryProjectName: '',
       sentryProjectId: '',
       grafanaDashboardLink: '',
-      slackWebhookUrl: '',
+      slackWebhookUrls: '',
     }
     const slackMessage = generateSlackMessage(
       MOCK_REPO_LINK,

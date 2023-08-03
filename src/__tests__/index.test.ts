@@ -38,12 +38,12 @@ describe('run function', () => {
       grafanaDashboardLink: 'http://mock-grafana-link',
       sentryProjectName: 'mock-sentry-project-name',
       sentryProjectId: 'mock-sentry-project-id',
-      slackWebhookUrl: 'http://mock-webhook-url',
+      slackWebhookUrls: 'http://mock-webhook-url',
       jiraInstanceUrl: 'http://mock-jira-instance-url',
       jiraTicketPrefix: 'ABC',
       contributorReplaceChar: '.',
       contributorReplaceRegex: '-',
-      tagRegex: '^v[0-9]+\\.[0-9]+\\.[0-9]+$'
+      tagRegex: '^v[0-9]+\\.[0-9]+\\.[0-9]+$',
     })
 
     const getOwnerAndRepoMock = jest.spyOn(getOwnerAndRepoModule, 'getOwnerAndRepo')
@@ -106,7 +106,6 @@ describe('run function', () => {
       'generateReleaseLink'
     )
     generateReleaseLinkMock.mockReturnValue('http://mock-release-link')
-
 
     // const getCommitOfTagMock = jest.spyOn(getCommitOfTagModule, 'getCommitOfTag')
     // getCommitOfTagMock.mockResolvedValue({ data: { html_url: 'http://mock-commit-url' } })

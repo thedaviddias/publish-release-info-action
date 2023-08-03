@@ -97,7 +97,7 @@ jobs:
         uses: ./
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          slack_webhook_urls: ${{ secrets.SLACK_WEBHOOK_URL }}
           sentry_project_name: ${{ secrets.SENTRY_PROJECT_NAME }}
           sentry_project_id: ${{ secrets.SENTRY_PROJECT_ID }}
           grafana_dashboard_link: https://example.grafana.net/d/xxxx/web-overview?orgId=1
