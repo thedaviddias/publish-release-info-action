@@ -33,7 +33,7 @@ export async function run(): Promise<void> {
     // Get the current and previous git tags for the repo
     const { currentTag, previousTag } = await getTags(octokit, owner, repo)
 
-    if (!currentTag || !previousTag) {
+    if (!currentTag.name || !previousTag.name) {
       core.warning('No current or previous tag found. Exiting.')
       return
     }
