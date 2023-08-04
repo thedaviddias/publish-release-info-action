@@ -46,24 +46,26 @@ jobs:
           contributor_replace_regex: "-"
           contributor_replace_char: "."
           time_zone_offset: "-4" # Toronto (Canada - Ontario)
+          locale: "fr-FR"
 ```
 
 #### Inputs
 
-| Name                        | Required | Default                   | Description                                                                                               |
-| --------------------------- | -------- | ------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `github_token`              | yes      |                           | Token to use to authorize label changes. Typically the GITHUB_TOKEN secret                                |
-| `repo`                      | no       |                           | Name of the repo (e.g. owner/repo) if not the current one                                                 |
-| `tag_regex`                 | no       | ^v[0-9]+\.[0-9]+\.[0-9]+$ | Regex to accommodate varying tag formatting.                                                              |
-| `time_zone_offset`          | no       | 0                         | Timezone offset in minutes from UTC.                                                                      |
-| `contributor_replace_regex` | no       |                           | Regular expression (regex) pattern to identify characters in the `contributor` name that will be replaced |
-| `contributor_replace_char`  | no       |                           | The character that will replace specific characters in the `contributor` name                             |
-| `slack_webhook_urls`        | no       |                           | Slack webhook URL to receive release notifications                                                        |
-| `jira_ticket_prefix`        | no       |                           | Prefix for JIRA ticket references in PR titles (e.g. ABC)                                                 |
-| `jira_instance_url`         | no       |                           | URL for your JIRA instance to generate JIRA ticket links (e.g. https://your-jira-instance.com)            |
-| `sentry_project_name`       | no       |                           | ID of the Sentry project for error tracking                                                               |
-| `sentry_project_name`       | no       |                           | Name of the Sentry project for error tracking                                                             |
-| `grafana_dashboard_link`    | no       |                           | Link to the Grafana dashboard for monitoring                                                              |
+| Name                        | Required | Default                   | Description                                                                                                             |
+| --------------------------- | -------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `github_token`              | yes      |                           | Token to use to authorize label changes. Typically the GITHUB_TOKEN secret                                              |
+| `repo`                      | no       |                           | Name of the repo (e.g. owner/repo) if not the current one                                                               |
+| `tag_regex`                 | no       | ^v[0-9]+\.[0-9]+\.[0-9]+$ | Regex to accommodate varying tag formatting.                                                                            |
+| `time_zone_offset`          | no       | 0                         | Timezone offset in minutes from UTC.                                                                                    |
+| `locale`                    | no       | en-US                     | Preferred locale for date formatting, adhering to the BCP 47 language tag standard (e.g., 'en-US' for American English) |
+| `contributor_replace_regex` | no       |                           | Regular expression (regex) pattern to identify characters in the `contributor` name that will be replaced               |
+| `contributor_replace_char`  | no       |                           | The character that will replace specific characters in the `contributor` name                                           |
+| `slack_webhook_urls`        | no       |                           | Slack webhook URL to receive release notifications                                                                      |
+| `jira_ticket_prefix`        | no       |                           | Prefix for JIRA ticket references in PR titles (e.g. ABC)                                                               |
+| `jira_instance_url`         | no       |                           | URL for your JIRA instance to generate JIRA ticket links (e.g. https://your-jira-instance.com)                          |
+| `sentry_project_name`       | no       |                           | ID of the Sentry project for error tracking                                                                             |
+| `sentry_project_name`       | no       |                           | Name of the Sentry project for error tracking                                                                           |
+| `grafana_dashboard_link`    | no       |                           | Link to the Grafana dashboard for monitoring                                                                            |
 
 
 ### Outputs

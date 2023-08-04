@@ -104,5 +104,6 @@ jobs:
           jira_ticket_prefix: "ABC"
           jira_instance_url: "https://example.atlassian.net"
           time_zone_offset: "-4" # Toronto (Canada - Ontario)
+          locale: "fr-FR"
 
 

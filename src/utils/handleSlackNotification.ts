@@ -78,7 +78,7 @@ export async function handleSlackNotification({
   )
 
   // Get the current date in the specified time zone
-  const currentDate = getCurrentDate(options.timeZoneOffset)
+  const currentDate = getCurrentDate(options.timeZoneOffset, options.locale)
 
   // Generate the Slack message data, which includes information about the repository, the release, the commit of the current tag,
   // the list of pull requests, and the current date

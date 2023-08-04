@@ -65,4 +65,5 @@ export const MOCK_GET_INPUTS = {
   contributorReplaceRegex: '-',
   tagRegex: '^v[0-9]+.[0-9]+.[0-9]+$',
   timeZoneOffset: '0',
+  locale: 'fr-FR'
 }
