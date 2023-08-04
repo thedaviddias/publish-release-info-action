@@ -1,6 +1,21 @@
 import { getInputs, GetInputsType } from '../getInputs'
 import * as core from '@actions/core'
 
+export const expectedInputs: GetInputsType = {
+  repo: 'my-repo',
+  grafanaDashboardLink: 'my-dashboard-link',
+  sentryProjectName: 'my-project-name',
+  sentryProjectId: 'invalid-project-id',
+  slackWebhookUrls: 'invalid-webhook-url',
+  jiraInstanceUrl: 'invalid-jira-ticket-link/browse/',
+  jiraTicketPrefix: 'ABC',
+  contributorReplaceChar: '.',
+  contributorReplaceRegex: '-',
+  tagRegex: 'my-tag-regex',
+  timeZoneOffset: '0',
+  locale: 'locale',
+}
+
 describe('getInputs', () => {
   it('returns input options and logs warning for invalid input', () => {
     const mockGetInput = jest.spyOn(core, 'getInput')
@@ -37,21 +52,6 @@ describe('getInputs', () => {
 
     const mockWarning = jest.spyOn(core, 'warning')
     mockWarning.mockImplementation(() => {}) // prevent actual console output during testing
-
-    const expectedInputs: GetInputsType = {
-      repo: 'my-repo',
-      grafanaDashboardLink: 'my-dashboard-link',
-      sentryProjectName: 'my-project-name',
-      sentryProjectId: 'invalid-project-id',
-      slackWebhookUrls: 'invalid-webhook-url',
-      jiraInstanceUrl: 'invalid-jira-ticket-link/browse/',
-      jiraTicketPrefix: 'ABC',
-      contributorReplaceChar: '.',
-      contributorReplaceRegex: '-',
-      tagRegex: 'my-tag-regex',
-      timeZoneOffset: '0',
-      locale: 'locale',
-    }
 
     expect(getInputs()).toEqual(expectedInputs)
     expect(core.getInput).toHaveBeenCalledWith('repo')

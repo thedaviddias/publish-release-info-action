@@ -10,7 +10,7 @@ import { parseTicketNumberFromTitle } from './parseTicketNumberFromTitle'
 import { ContributorCommits } from './getContributorCommits'
 import { RestEndpointMethodTypes } from '@octokit/action'
 
-type SlackNotification = {
+export type SlackNotification = {
   contributorsCommits: ContributorCommits[]
   currentTagCommit: RestEndpointMethodTypes['git']['getCommit']['response']
   options: GetInputsType
