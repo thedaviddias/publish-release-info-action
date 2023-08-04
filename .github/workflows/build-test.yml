@@ -103,5 +103,6 @@ jobs:
           grafana_dashboard_link: https://example.grafana.net/d/xxxx/web-overview?orgId=1
           jira_ticket_prefix: "ABC"
           jira_instance_url: "https://example.atlassian.net"
+          time_zone_offset: "-4" # Toronto (Canada - Ontario)
 
 

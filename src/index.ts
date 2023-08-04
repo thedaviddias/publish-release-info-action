@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import axios from 'axios'
+
 import { getOwnerAndRepo } from './utils/getOwnerAndRepo'
 import { getOctokit } from './utils/getOctokit'
 import { getInputs } from './utils/getInputs'
@@ -10,11 +10,8 @@ import { getBaseUrlFromContext } from './utils/getBaseUrlFromContext'
 import { generateRepoLink } from './utils/generateRepoLink'
 import { generateReleaseLink } from './utils/generateReleaseLink'
 import { getCommitOfTag } from './utils/getCommitOfTag'
-import { generatePRListString } from './utils/generatePRListString'
-import { generateSlackMessage } from './utils/generateSlackMessage'
-import { parseTicketNumberFromTitle } from './utils/parseTicketNumberFromTitle'
-import { generateJiraTicketLink } from './utils/generateJiraTicketLink'
 import { compareSemVer } from './utils/compareSemVer'
+import { handleSlackNotification } from './utils/handleSlackNotification'
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function run(): Promise<void> {
@@ -32,31 +29,31 @@ export async function run(): Promise<void> {
     // Get the current and previous git tags for the repo
     const { currentTag, previousTag } = await getTags(octokit, owner, repo)
 
-    if (!currentTag || !previousTag) {
+    if (!currentTag.name || !previousTag.name) {
       core.warning('No current or previous tag found. Exiting.')
       return
     }
 
     // Extract the version number from the tag using the provided regex
     const tagRegex = new RegExp(options.tagRegex)
+
     const currentVersionMatch = currentTag.name.match(tagRegex)
     const previousVersionMatch = previousTag.name.match(tagRegex)
 
     if (!currentVersionMatch || !previousVersionMatch) {
-      core.warning(
+      core.error(
         'Current or previous tag does not match the provided regular expression. Exiting.'
       )
       return
     }
 
-    // Use the first capture group as the version number
-    const currentVersion = currentVersionMatch[1]
-    const previousVersion = previousVersionMatch[1]
+    const currentVersion = currentVersionMatch[0]
+    const previousVersion = previousVersionMatch[0]
 
-    const comparisonResult = compareSemVer(currentVersion, previousVersion)
+    const comparisonResult = compareSemVer(previousVersion, currentVersion)
 
     if (comparisonResult <= 0) {
-      core.warning('Current tag is not greater than the previous tag. Exiting.')
+      core.error('Current tag is not greater than the previous tag. Exiting.')
       return
     }
 
@@ -97,7 +94,10 @@ export async function run(): Promise<void> {
     )
 
     // Get the Slack webhook URL from the GitHub Action input
-    const slackWebhookUrls = core.getInput('slack_webhook_urls').split(',')
+    const slackWebhookUrls = core
+      .getInput('slack_webhook_urls')
+      .split(',')
+      .filter(Boolean)
 
     if (!slackWebhookUrls.length) {
       // If the Slack webhook URL is not provided, skip sending the notification to Slack
@@ -121,55 +121,16 @@ export async function run(): Promise<void> {
       return
     }
 
-    core.info('Slack Webhook URL is provided, generating Slack message.')
-
-    const contributorsCommitsWithTicketLinks = contributorsCommits.map((commit) => {
-      const ticketNumber = options.jiraTicketPrefix
-        ? parseTicketNumberFromTitle(commit.prTitle, options.jiraTicketPrefix)
-        : null
-      const ticketLink =
-        ticketNumber && options.jiraInstanceUrl
-          ? generateJiraTicketLink(ticketNumber, options.jiraInstanceUrl)
-          : null
-      return {
-        ...commit,
-        jiraTicketLink: ticketLink,
-        jiraTicketPrefix: options.jiraTicketPrefix,
-      }
-    })
-
-    const prListString = generatePRListString(
-      contributorsCommitsWithTicketLinks,
-      options.jiraTicketPrefix,
-      options.jiraInstanceUrl,
-      options.contributorReplaceChar,
-      options.contributorReplaceRegex
-    )
-
-    const currentDate = new Date().toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    })
-
-    const slackData = generateSlackMessage(
+    await handleSlackNotification({
+      contributorsCommits,
+      currentTagCommit,
+      options,
+      slackWebhookUrls,
       repoLink,
       releaseLink,
       releaseVersion,
-      currentTagCommit,
-      prListString,
-      options,
       repo,
-      currentDate
-    )
-
-    for (const url of slackWebhookUrls) {
-      await axios.post(url.trim(), slackData)
-      core.info(`Message to Slack`)
-    }
+    })
   } catch (error) {
     // If an error occurs during the script execution, fail the GitHub Action and output the error message
     if (error instanceof Error) {

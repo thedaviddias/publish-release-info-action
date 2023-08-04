@@ -1,6 +1,13 @@
 import * as github from '@actions/github'
 import * as core from '@actions/core'
 
+export type ContributorCommits = {
+  contributor: string
+  prTitle: string
+  prUrl: string
+  prNumber: number
+}
+
 /**
  * Gets the commits from contributors.
  *
@@ -15,14 +22,7 @@ export async function getContributorCommits(
   owner: string,
   repo: string,
   commits: string[]
-): Promise<
-  Array<{
-    contributor: string
-    prTitle: string
-    prUrl: string
-    prNumber: number
-  }>
-> {
+): Promise<ContributorCommits[]> {
   const contributorsCommits = []
 
   for (const commit of commits) {

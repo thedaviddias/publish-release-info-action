@@ -49,7 +49,7 @@ describe('getTags', () => {
     })
     expect(core.info).toHaveBeenCalledWith('Getting list of tags')
     expect(core.info).toHaveBeenCalledWith(
-      `Fetching commits between ${mockTags[1].name} and ${mockTags[0].name}`
+      `Fetching commits between ${mockTags[1].name} (previous tag) and ${mockTags[0].name} (current tag)`
     )
   })
 })

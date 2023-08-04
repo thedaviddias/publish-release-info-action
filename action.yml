@@ -15,7 +15,7 @@ inputs:
   tag_regex:
     description: 'A regular expression to match against git tags. The first capture group should be the version number.'
     required: false
-    default: '^v[0-9]+\\.[0-9]+\\.[0-9]+$'  # Matches the "v" prefix by default
+    default: '^v[0-9]+\.[0-9]+\.[0-9]+$'  # Matches the semver notation (v1.0.0") by default
 
   contributor_replace_regex:
     description: An optional regular expression (regex) pattern to identify characters in the `contributor` name that will be replaced.
@@ -52,6 +52,11 @@ inputs:
   grafana_dashboard_link:
     description: The URL link to the Grafana dashboard related to the repository. This link will be included in the Slack notification for easy access to relevant analytics.
     required: false
+
+  time_zone_offset:
+    description: 'Timezone offset in minutes from UTC. Positive for timezones ahead of UTC, negative for those behind.'
+    required: false
+    default: '0'  # Default is 0, i.e., UTC time
 
 runs:
   using: node16

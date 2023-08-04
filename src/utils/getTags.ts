@@ -24,7 +24,9 @@ export async function getTags(
   const { data } = await octokit.rest.repos.listTags({ owner, repo, per_page: 2 })
   const [currentTag, previousTag] = data
 
-  core.info(`Fetching commits between ${previousTag.name} and ${currentTag.name}`)
+  core.info(
+    `Fetching commits between ${previousTag.name} (previous tag) and ${currentTag.name} (current tag)`
+  )
 
   return { currentTag, previousTag }
 }

@@ -1,26 +1,37 @@
 /**
- * Compare two semantic version strings.
+ * Compare two semantic version strings. Semantic versioning strings are
+ * typically in the form of `major.minor.patch` (e.g., "1.2.3").
  *
- * @param version1 - The first version string
- * @param version2 - The second version string
+ * @param previousTagVersion - The semantic version string for the previous tag.
+ * @param currentTagVersion - The semantic version string for the current tag.
  *
- * @returns -1 if version1 < version2, 0 if they're equal, and 1 if version1 > version2.
+ * @returns  1 if previousTagVersion < currentTagVersion,
+ *           0 if they're equal,
+ *          -1 if previousTagVersion > currentTagVersion.
  */
-export function compareSemVer(version1: string, version2: string): number {
-  const v1parts = version1.split('.').map(Number)
-  const v2parts = version2.split('.').map(Number)
+export function compareSemVer(
+  previousTagVersion: string,
+  currentTagVersion: string
+): number {
+  // Remove "v" and split the version strings into arrays of numbers
+  const previousParts = previousTagVersion.replace('v', '').split('.').map(Number)
+  const currentParts = currentTagVersion.replace('v', '').split('.').map(Number)
 
-  for (let i = 0; i < v1parts.length; ++i) {
-    if (v2parts.length === i) {
-      return 1
-    }
-    if (v1parts[i] === v2parts[i]) {
-      continue
-    } else if (v1parts[i] > v2parts[i]) {
-      return 1
-    } else {
+  // Get the maximum length between the two arrays
+  const maxLength = Math.max(previousParts.length, currentParts.length)
+
+  // Iterate over each number in the version arrays
+  for (let i = 0; i < maxLength; i++) {
+    // If previousPart is greater than currentPart or currentPart doesn't exist, return -1
+    if (previousParts[i] > (currentParts[i] || 0)) {
       return -1
     }
+    // If previousPart is less than currentPart or previousPart doesn't exist, return 1
+    if ((previousParts[i] || 0) < currentParts[i]) {
+      return 1
+    }
   }
-  return v1parts.length !== v2parts.length ? -1 : 0
+
+  // If all parts are equal, return 0
+  return 0
 }
