@@ -35,22 +35,22 @@ export async function run(): Promise<void> {
     }
 
     // Extract the version number from the tag using the provided regex
-    // const tagRegex = new RegExp(options.tagRegex)
-    // const currentVersionMatch = currentTag.name.match(tagRegex)
-    // const previousVersionMatch = previousTag.name.match(tagRegex)
+    const tagRegex = new RegExp(options.tagRegex)
 
-    // if (!currentVersionMatch || !previousVersionMatch) {
-    //   core.error(
-    //     'Current or previous tag does not match the provided regular expression. Exiting.'
-    //   )
-    //   return
-    // }
+    const currentVersionMatch = currentTag.name.match(tagRegex)
+    const previousVersionMatch = previousTag.name.match(tagRegex)
 
-    // // Use the first capture group as the version number
-    // const currentVersion = currentVersionMatch[1]
-    // const previousVersion = previousVersionMatch[1]
+    if (!currentVersionMatch || !previousVersionMatch) {
+      core.error(
+        'Current or previous tag does not match the provided regular expression. Exiting.'
+      )
+      return
+    }
 
-    const comparisonResult = compareSemVer(previousTag.name, currentTag.name)
+    const currentVersion = currentVersionMatch[0]
+    const previousVersion = previousVersionMatch[0]
+
+    const comparisonResult = compareSemVer(previousVersion, currentVersion)
 
     if (comparisonResult <= 0) {
       core.error('Current tag is not greater than the previous tag. Exiting.')
@@ -94,7 +94,10 @@ export async function run(): Promise<void> {
     )
 
     // Get the Slack webhook URL from the GitHub Action input
-    const slackWebhookUrls = core.getInput('slack_webhook_urls').split(',').filter(Boolean)
+    const slackWebhookUrls = core
+      .getInput('slack_webhook_urls')
+      .split(',')
+      .filter(Boolean)
 
     if (!slackWebhookUrls.length) {
       // If the Slack webhook URL is not provided, skip sending the notification to Slack

@@ -103,7 +103,7 @@ describe('getInputs', () => {
         case 'contributor_replace_regex':
           return '-'
         case 'tag_regex':
-          return '^v[0-9]+\\.[0-9]+\\.[0-9]+$'
+          return '^v[0-9]+.[0-9]+.[0-9]+$'
         case 'time_zone_offset':
           return '0'
         default:
@@ -125,7 +125,7 @@ describe('getInputs', () => {
       jiraTicketPrefix: 'ABC',
       contributorReplaceChar: '.',
       contributorReplaceRegex: '-',
-      tagRegex: '^v[0-9]+\\.[0-9]+\\.[0-9]+$',
+      tagRegex: '^v[0-9]+.[0-9]+.[0-9]+$',
       timeZoneOffset: '0',
     }
 

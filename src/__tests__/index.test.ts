@@ -43,7 +43,7 @@ describe('run function', () => {
       jiraTicketPrefix: 'ABC',
       contributorReplaceChar: '.',
       contributorReplaceRegex: '-',
-      tagRegex: '^v[0-9]+\\.[0-9]+\\.[0-9]+$',
+      tagRegex: '^v[0-9]+.[0-9]+.[0-9]+$',
       timeZoneOffset: '0',
     })
 

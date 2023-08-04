@@ -43,7 +43,7 @@ export function getInputs(): GetInputsType {
   core.info('Input options obtained.')
 
   const repo = core.getInput('repo') || ''
-  const tagRegex = core.getInput('tag_regex') || '^v[0-9]+\\.[0-9]+\\.[0-9]+$'
+  const tagRegex = core.getInput('tag_regex') || '^v[0-9]+.[0-9]+.[0-9]+$'
   const jiraTicketPrefix = core.getInput('jira_ticket_prefix') || ''
   const jiraInstanceUrl = core.getInput('jira_instance_url') || ''
   const grafanaDashboardLink = core.getInput('grafana_dashboard_link') || ''
