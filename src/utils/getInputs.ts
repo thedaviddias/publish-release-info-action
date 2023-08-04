@@ -32,6 +32,7 @@ export interface GetInputsType {
   contributorReplaceChar: string
   contributorReplaceRegex: string
   timeZoneOffset: string
+  locale: string
 }
 
 /**
@@ -53,6 +54,7 @@ export function getInputs(): GetInputsType {
   const contributorReplaceChar = core.getInput('contributor_replace_char') || ''
   const contributorReplaceRegex = core.getInput('contributor_replace_regex') || ''
   let timeZoneOffset = core.getInput('time_zone_offset') || '0'
+  const locale = core.getInput('locale') || 'en-US'
 
   // Input value checking example for URLs
   if (grafanaDashboardLink && !isValidUrl(grafanaDashboardLink)) {
@@ -121,5 +123,6 @@ export function getInputs(): GetInputsType {
     contributorReplaceChar,
     contributorReplaceRegex,
     timeZoneOffset,
+    locale,
   }
 }

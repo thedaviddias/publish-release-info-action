@@ -28,6 +28,8 @@ describe('getInputs', () => {
           return 'my-tag-regex'
         case 'time_zone_offset':
           return 'GTM-0'
+        case 'locale':
+          return 'locale'
         default:
           return ''
       }
@@ -48,6 +50,7 @@ describe('getInputs', () => {
       contributorReplaceRegex: '-',
       tagRegex: 'my-tag-regex',
       timeZoneOffset: '0',
+      locale: 'locale',
     }
 
     expect(getInputs()).toEqual(expectedInputs)
@@ -106,6 +109,8 @@ describe('getInputs', () => {
           return '^v[0-9]+.[0-9]+.[0-9]+$'
         case 'time_zone_offset':
           return '0'
+        case 'locale':
+          return 'fr-FR'
         default:
           return ''
       }
@@ -127,6 +132,7 @@ describe('getInputs', () => {
       contributorReplaceRegex: '-',
       tagRegex: '^v[0-9]+.[0-9]+.[0-9]+$',
       timeZoneOffset: '0',
+      locale: 'fr-FR',
     }
 
     expect(getInputs()).toEqual(expectedInputs)
