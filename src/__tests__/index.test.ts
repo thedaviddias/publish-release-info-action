@@ -2,7 +2,7 @@ import * as core from '@actions/core'
 import { run } from '../index'
 import * as getInputsModule from '../utils/getInputs'
 import * as getOwnerAndRepoModule from '../utils/getOwnerAndRepo'
-// import * as getOctokitModule from '../utils/getOctokit'
+import * as getOctokitModule from '../utils/getOctokit'
 import * as getTagsModule from '../utils/getTags'
 import * as getCommitsBetweenTagsModule from '../utils/getCommitsBetweenTags'
 import * as getContributorCommitsModule from '../utils/getContributorCommits'
@@ -26,11 +26,16 @@ jest.mock('../utils/generateReleaseLink')
 jest.mock('../utils/getCommitOfTag')
 jest.mock('../utils/generatePRListString')
 jest.mock('../utils/compareSemVer')
+jest.mock('../utils/getOctokit')
 
 const mockedGetInputs =
   getInputsModule.getInputs as jest.Mock<getInputsModule.GetInputsType>
 
 describe('run function', () => {
+  beforeEach(() => {
+    jest.resetAllMocks() // This will reset all your mocks before each test
+  })
+
   it('should call getInputs, getOwnerAndRepo and getOctokit once', async () => {
     // Set up our mock implementations
     mockedGetInputs.mockReturnValue({
@@ -45,14 +50,14 @@ describe('run function', () => {
       contributorReplaceRegex: '-',
       tagRegex: '^v[0-9]+.[0-9]+.[0-9]+$',
       timeZoneOffset: '0',
-      locale: 'fr-FR'
+      locale: 'fr-FR',
     })
 
     const getOwnerAndRepoMock = jest.spyOn(getOwnerAndRepoModule, 'getOwnerAndRepo')
     getOwnerAndRepoMock.mockReturnValue({ owner: 'mock', repo: 'repo' })
 
     // const getOctokitMock = jest.spyOn(getOctokitModule, 'getOctokit')
-    // getOctokitMock.mockReturnValue('mock-octokit')
+    // getOctokitMock.mockReturnValue()
 
     const getTagsMock = jest.spyOn(getTagsModule, 'getTags')
     getTagsMock.mockResolvedValue({

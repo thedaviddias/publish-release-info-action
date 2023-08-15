@@ -54,14 +54,19 @@ inputs:
     required: false
 
   time_zone_offset:
-    description: 'Timezone offset in minutes from UTC. Positive for timezones ahead of UTC, negative for those behind.'
+    description: Timezone offset in minutes from UTC. Positive for timezones ahead of UTC, negative for those behind.
     required: false
     default: '0'  # Default is 0, i.e., UTC time
 
   locale:
-    description: 'Locale for date formatting'
+    description: Locale for date formatting
     required: false
     default: 'en-US' # Default locale is American English
+
+  fail_on_slack_error:
+    description: Fail the action if sending the Slack notification fails
+    required: false
+    default: 'true'
 
 runs:
   using: node16

@@ -30,6 +30,8 @@ describe('getInputs', () => {
           return 'GTM-0'
         case 'locale':
           return 'locale'
+        case 'fail_on_slack_error':
+          return ''
         default:
           return ''
       }
@@ -51,6 +53,7 @@ describe('getInputs', () => {
       tagRegex: 'my-tag-regex',
       timeZoneOffset: '0',
       locale: 'locale',
+      failOnSlackError: 'true',
     }
 
     expect(getInputs()).toEqual(expectedInputs)
@@ -63,6 +66,7 @@ describe('getInputs', () => {
     expect(core.getInput).toHaveBeenCalledWith('jira_ticket_prefix')
     expect(core.getInput).toHaveBeenCalledWith('tag_regex')
     expect(core.getInput).toHaveBeenCalledWith('time_zone_offset')
+    expect(core.getInput).toHaveBeenCalledWith('fail_on_slack_error')
     expect(core.warning).toHaveBeenCalledWith(
       "Invalid time zone offset: GTM-0. It should be a numerical value representing minutes from UTC. Positive for timezones ahead of UTC, negative for those behind. Defaulting to '0' (UTC)."
     )
@@ -85,6 +89,7 @@ describe('getInputs', () => {
 
   it('returns input options and does not log any warning for valid input', () => {
     const mockGetInput = jest.spyOn(core, 'getInput')
+
     mockGetInput.mockImplementation((name) => {
       switch (name) {
         case 'repo':
@@ -111,6 +116,8 @@ describe('getInputs', () => {
           return '0'
         case 'locale':
           return 'fr-FR'
+        case 'fail_on_slack_error':
+          return 'false'
         default:
           return ''
       }
@@ -133,6 +140,7 @@ describe('getInputs', () => {
       tagRegex: '^v[0-9]+.[0-9]+.[0-9]+$',
       timeZoneOffset: '0',
       locale: 'fr-FR',
+      failOnSlackError: 'false',
     }
 
     expect(getInputs()).toEqual(expectedInputs)
@@ -147,6 +155,7 @@ describe('getInputs', () => {
     expect(core.getInput).toHaveBeenCalledWith('contributor_replace_char')
     expect(core.getInput).toHaveBeenCalledWith('contributor_replace_regex')
     expect(core.getInput).toHaveBeenCalledWith('time_zone_offset')
+    expect(core.getInput).toHaveBeenCalledWith('fail_on_slack_error')
     expect(mockWarning).not.toHaveBeenCalled() // no warnings should be logged
 
     mockGetInput.mockRestore()

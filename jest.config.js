@@ -6,4 +6,5 @@ module.exports = {
     '^.+\\.ts$': ['ts-jest', { tsconfig: 'tsconfig.test.json' }]
   },
   verbose: true,
+  modulePathIgnorePatterns: ["<rootDir>/dist/"],
 }

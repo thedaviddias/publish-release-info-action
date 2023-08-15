@@ -15,10 +15,10 @@ import { handleSlackNotification } from './utils/handleSlackNotification'
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export async function run(): Promise<void> {
-  try {
-    // Get script input options from the GitHub Action input
-    const options = getInputs()
+  // Get script input options from the GitHub Action input
+  const options = getInputs()
 
+  try {
     // Extract the owner and repo from the input options
     const { owner, repo } = getOwnerAndRepo(options.repo)
 
@@ -135,7 +135,11 @@ export async function run(): Promise<void> {
     // If an error occurs during the script execution, fail the GitHub Action and output the error message
     if (error instanceof Error) {
       core.error(error)
-      core.setFailed(error)
+
+      // Fail the action if the fail_on_slack_error option is true
+      if (options.failOnSlackError === 'true') {
+        core.setFailed(error)
+      }
     }
   }
 }
