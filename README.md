@@ -47,6 +47,7 @@ jobs:
           contributor_replace_char: "."
           time_zone_offset: "-4" # Toronto (Canada - Ontario)
           locale: "fr-FR"
+          fail_on_slack_error: "true"
 ```
 
 #### Inputs
@@ -66,6 +67,7 @@ jobs:
 | `sentry_project_name`       | no       |                           | ID of the Sentry project for error tracking                                                                             |
 | `sentry_project_name`       | no       |                           | Name of the Sentry project for error tracking                                                                           |
 | `grafana_dashboard_link`    | no       |                           | Link to the Grafana dashboard for monitoring                                                                            |
+| `fail_on_slack_error`       | no       | true                      | Allow you to fail or not your current workflow depending on the success of posting on Slack                             |
 
 
 ### Outputs

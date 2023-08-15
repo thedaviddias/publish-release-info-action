@@ -33,6 +33,7 @@ export interface GetInputsType {
   contributorReplaceRegex: string
   timeZoneOffset: string
   locale: string
+  failOnSlackError: string
 }
 
 /**
@@ -55,6 +56,7 @@ export function getInputs(): GetInputsType {
   const contributorReplaceRegex = core.getInput('contributor_replace_regex') || ''
   let timeZoneOffset = core.getInput('time_zone_offset') || '0'
   const locale = core.getInput('locale') || 'en-US'
+  const failOnSlackError = core.getInput('fail_on_slack_error') || 'true'
 
   // Input value checking example for URLs
   if (grafanaDashboardLink && !isValidUrl(grafanaDashboardLink)) {
@@ -124,5 +126,6 @@ export function getInputs(): GetInputsType {
     contributorReplaceRegex,
     timeZoneOffset,
     locale,
+    failOnSlackError,
   }
 }

@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 
 import { generateJiraTicketLink } from './generateJiraTicketLink'
 import { generatePRListString } from './generatePRListString'
@@ -95,7 +95,21 @@ export async function handleSlackNotification({
 
   // Post the Slack message data to each provided Slack webhook URL
   for (const url of slackWebhookUrls) {
-    await axios.post(url.trim(), slackData)
-    core.info(`Message sent to Slack`)
+    try {
+      await axios.post(url.trim(), slackData)
+      core.info(`Message sent to Slack`)
+    } catch (error) {
+      const axiosError = error as AxiosError<any>
+      if (axiosError.response) {
+        core.error(`Error posting to Slack. URL: ${url.trim()}`)
+        core.error(`Status code: ${axiosError.response.status}`)
+        core.error(`Response data: ${JSON.stringify(axiosError.response.data)}`)
+      } else if (axiosError.request) {
+        core.error(`No response received when posting to Slack. URL: ${url.trim()}`)
+        core.error(`Request: ${JSON.stringify(axiosError.request)}`)
+      } else {
+        core.error(axiosError.message)
+      }
+    }
   }
 }

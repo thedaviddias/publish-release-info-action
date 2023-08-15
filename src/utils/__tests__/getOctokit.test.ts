@@ -15,7 +15,6 @@ const mockToken = '123456'
 
 describe('getOctokit function', () => {
   it('should get a github token and return an authenticated Octokit client', () => {
-
     const mockOctokit = {
       repos: {
         get: jest.fn(),

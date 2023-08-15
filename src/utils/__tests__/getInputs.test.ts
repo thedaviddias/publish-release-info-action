@@ -1,21 +1,6 @@
 import { getInputs, GetInputsType } from '../getInputs'
 import * as core from '@actions/core'
 
-export const expectedInputs: GetInputsType = {
-  repo: 'my-repo',
-  grafanaDashboardLink: 'my-dashboard-link',
-  sentryProjectName: 'my-project-name',
-  sentryProjectId: 'invalid-project-id',
-  slackWebhookUrls: 'invalid-webhook-url',
-  jiraInstanceUrl: 'invalid-jira-ticket-link/browse/',
-  jiraTicketPrefix: 'ABC',
-  contributorReplaceChar: '.',
-  contributorReplaceRegex: '-',
-  tagRegex: 'my-tag-regex',
-  timeZoneOffset: '0',
-  locale: 'locale',
-}
-
 describe('getInputs', () => {
   it('returns input options and logs warning for invalid input', () => {
     const mockGetInput = jest.spyOn(core, 'getInput')
@@ -45,6 +30,8 @@ describe('getInputs', () => {
           return 'GTM-0'
         case 'locale':
           return 'locale'
+        case 'fail_on_slack_error':
+          return ''
         default:
           return ''
       }
@@ -52,6 +39,22 @@ describe('getInputs', () => {
 
     const mockWarning = jest.spyOn(core, 'warning')
     mockWarning.mockImplementation(() => {}) // prevent actual console output during testing
+
+    const expectedInputs: GetInputsType = {
+      repo: 'my-repo',
+      grafanaDashboardLink: 'my-dashboard-link',
+      sentryProjectName: 'my-project-name',
+      sentryProjectId: 'invalid-project-id',
+      slackWebhookUrls: 'invalid-webhook-url',
+      jiraInstanceUrl: 'invalid-jira-ticket-link/browse/',
+      jiraTicketPrefix: 'ABC',
+      contributorReplaceChar: '.',
+      contributorReplaceRegex: '-',
+      tagRegex: 'my-tag-regex',
+      timeZoneOffset: '0',
+      locale: 'locale',
+      failOnSlackError: 'true',
+    }
 
     expect(getInputs()).toEqual(expectedInputs)
     expect(core.getInput).toHaveBeenCalledWith('repo')
@@ -63,6 +66,7 @@ describe('getInputs', () => {
     expect(core.getInput).toHaveBeenCalledWith('jira_ticket_prefix')
     expect(core.getInput).toHaveBeenCalledWith('tag_regex')
     expect(core.getInput).toHaveBeenCalledWith('time_zone_offset')
+    expect(core.getInput).toHaveBeenCalledWith('fail_on_slack_error')
     expect(core.warning).toHaveBeenCalledWith(
       "Invalid time zone offset: GTM-0. It should be a numerical value representing minutes from UTC. Positive for timezones ahead of UTC, negative for those behind. Defaulting to '0' (UTC)."
     )
@@ -85,6 +89,7 @@ describe('getInputs', () => {
 
   it('returns input options and does not log any warning for valid input', () => {
     const mockGetInput = jest.spyOn(core, 'getInput')
+
     mockGetInput.mockImplementation((name) => {
       switch (name) {
         case 'repo':
@@ -111,6 +116,8 @@ describe('getInputs', () => {
           return '0'
         case 'locale':
           return 'fr-FR'
+        case 'fail_on_slack_error':
+          return 'false'
         default:
           return ''
       }
@@ -133,6 +140,7 @@ describe('getInputs', () => {
       tagRegex: '^v[0-9]+.[0-9]+.[0-9]+$',
       timeZoneOffset: '0',
       locale: 'fr-FR',
+      failOnSlackError: 'false',
     }
 
     expect(getInputs()).toEqual(expectedInputs)
@@ -147,6 +155,7 @@ describe('getInputs', () => {
     expect(core.getInput).toHaveBeenCalledWith('contributor_replace_char')
     expect(core.getInput).toHaveBeenCalledWith('contributor_replace_regex')
     expect(core.getInput).toHaveBeenCalledWith('time_zone_offset')
+    expect(core.getInput).toHaveBeenCalledWith('fail_on_slack_error')
     expect(mockWarning).not.toHaveBeenCalled() // no warnings should be logged
 
     mockGetInput.mockRestore()

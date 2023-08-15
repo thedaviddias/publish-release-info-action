@@ -4,7 +4,7 @@ import {
   handleSlackNotification,
 } from '../handleSlackNotification'
 import * as core from '@actions/core'
-import { expectedInputs } from './getInputs.test'
+import { GetInputsType } from '../getInputs'
 
 jest.mock('axios')
 ;(axios.post as jest.Mock) = jest.fn().mockResolvedValue({})
@@ -12,6 +12,22 @@ jest.mock('axios')
 jest.mock('@actions/core', () => ({
   info: jest.fn(),
 }))
+
+export const expectedInputs: GetInputsType = {
+  repo: 'my-repo',
+  grafanaDashboardLink: 'my-dashboard-link',
+  sentryProjectName: 'my-project-name',
+  sentryProjectId: 'invalid-project-id',
+  slackWebhookUrls: 'invalid-webhook-url',
+  jiraInstanceUrl: 'invalid-jira-ticket-link/browse/',
+  jiraTicketPrefix: 'ABC',
+  contributorReplaceChar: '.',
+  contributorReplaceRegex: '-',
+  tagRegex: 'my-tag-regex',
+  timeZoneOffset: '0',
+  locale: 'locale',
+  failOnSlackError: 'true',
+}
 
 describe('handleSlackNotification', () => {
   it('sends a Slack notification for valid input', async () => {
@@ -44,8 +60,13 @@ describe('handleSlackNotification', () => {
             sha: 'tree-sha',
             url: 'tree-url',
           },
-          parents: [], // Fill this if needed
-          verification: {}, // Fill this if needed
+          parents: [],
+          verification: {
+            verified: true,
+            reason: '',
+            signature: '',
+            payload: '',
+          },
           html_url: 'https://github.com/your/repo/commit/a1b2c3d4e5f6g7h8i9j0k',
         },
         status: 200, // HTTP status code
