@@ -54,7 +54,7 @@ jobs:
           npm run all
 
       - name: Save Action Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           retention-days: 1
           name: release-artifact
