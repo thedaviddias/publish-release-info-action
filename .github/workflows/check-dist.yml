@@ -30,7 +30,7 @@ jobs:
         id: nvmrc
 
       - name: Use Node.js ${{ steps.nvmrc.outputs.NODE_VERSION }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "${{ steps.nvmrc.outputs.NODE_VERSION }}"
 
